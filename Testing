@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>COA &amp; Lab Testing - Sasquatch Muscle</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 800px; margin: 2rem auto; padding: 0 1rem; color: #9E9D5A; background-color: #02090F; }
+    .banner-wrapper { margin-bottom: 1rem; border-radius: 10px; overflow: hidden; border: 1px solid #c3dcc7; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12); background: #0f2419; }
+    .banner-img { width: 100%; height: auto; display: block; object-fit: cover; }
+    .nav-bar { display: flex; gap: 0.75rem; margin-bottom: 1.5rem; }
+    .nav-link { display: inline-block; background: #262B27; color: #9E9D5A; border: 1px solid #c3dcc7; text-decoration: none; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 600; font-size: 0.95rem; }
+    .nav-link:hover { background: #593210; color: #ffffff; }
+    .nav-link.active { background: #163020; color: #ffea00; border-color: #ffea00; }
+    .content-box { background: #262B27; border: 1px solid #c3dcc7; border-radius: 8px; padding: 1.5rem; }
+    .coa-list { list-style: none; padding: 0; margin: 1rem 0 0 0; }
+    .coa-item { display: flex; justify-content: space-between; align-items: center; padding: 0.85rem 0; border-bottom: 1px solid #3c443e; gap: 1rem; flex-wrap: wrap; }
+    .coa-item:last-child { border-bottom: none; }
+    .coa-meta { color: #b0b8c0; font-size: 0.9rem; }
+    .coa-btn { background: #593210; color: #ffffff; text-decoration: none; padding: 0.5rem 1rem; border-radius: 6px; font-size: 0.9rem; font-weight: 600; }
+    .coa-btn:hover { background: #0550ae; }
+  </style>
+</head>
+<body>
+
+  <div class="banner-wrapper">
+    <img src="SasquatchLargeBanner.jpg" alt="Sasquatch Muscle" class="banner-img">
+  </div>
+
+  <nav class="nav-bar">
+    <a href="index.html" class="nav-link">&larr; Store</a>
+    <a href="coa.html" class="nav-link active">COA / Testing</a>
+  </nav>
+
+  <div class="content-box">
+    <h1>Lab Testing &amp; Certificates of Analysis (COA)</h1>
+    <p>Select any product below to view its third-party lab testing report:</p>
+
+    <ul class="coa-list">
+      <li class="coa-item">
+        <div>
+          <strong>Sasquatch Testosterone E (300mg/ml)</strong><br>
+          <span class="coa-meta">Batch #001 &bull; Third-Party Lab Report</span>
+        </div>
+        <a href="https://example.com/test-e-coa" target="_blank" rel="noopener" class="coa-btn">View COA</a>
+      </li>
+
+      <li class="coa-item">
+        <div>
+          <strong>Sasquatch Testosterone C (250mg/ml)</strong><br>
+          <span class="coa-meta">Batch #001 &bull; Third-Party Lab Report</span>
+        </div>
+        <a href="https://example.com/test-c-coa" target="_blank" rel="noopener" class="coa-btn">View COA</a>
+      </li>
+    </ul>
+  </div>
+
+</body>
+</html>
