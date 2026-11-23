@@ -6,18 +6,20 @@
   <title>Sasquatch Muscle Store</title>
   <style>
     body { font-family: system-ui, sans-serif; max-width: 800px; margin: 2rem auto; padding: 0 1rem; color: #9E9D5A; background-color: #02090F; }
-    .banner-wrapper { margin-bottom: 1.5rem; border-radius: 10px; overflow: hidden; border: 1px solid #c3dcc7; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12); background: #0f2419; }
+    .banner-wrapper { margin-bottom: 1rem; border-radius: 10px; overflow: hidden; border: 1px solid #c3dcc7; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12); background: #0f2419; }
     .banner-img { width: 100%; height: auto; display: block; object-fit: cover; }
-    .promo-subheader {display: inline-block; background-color: #163020;color: #ffea00;font-size: 1.1rem; font-weight: 700; padding: 0.45rem 0.9rem; border-radius: 6px; margin-top: -0.5rem; margin-bottom: 1.5rem; }
-    
+    .nav-bar { display: flex; gap: 0.75rem; margin-bottom: 1.5rem; }
+    .nav-link { display: inline-block; background: #262B27; color: #9E9D5A; border: 1px solid #c3dcc7; text-decoration: none; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 600; font-size: 0.95rem; }
+    .nav-link:hover { background: #593210; color: #ffffff; }
+    .nav-link.active { background: #163020; color: #ffea00; border-color: #ffea00; }
+    .promo-subheader { display: inline-block; background-color: #163020; color: #ffea00; font-size: 1.1rem; font-weight: 700; padding: 0.45rem 0.9rem; border-radius: 6px; margin-top: -0.5rem; margin-bottom: 1.5rem; }
     .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
     .card { background: #262B27; border: 1px solid #c3dcc7; border-radius: 8px; padding: 1rem; display: flex; flex-direction: column; justify-content: space-between; }
     .product-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem; }
     .product-header h3 { margin: 0; font-size: 1.05rem; }
     .product-thumb { width: 44px; height: 44px; object-fit: contain; border-radius: 6px; border: 1px solid #e1e4e8; background: #f6f8fa; flex-shrink: 0; }
-    .old-price {color: #8c959f; text-decoration: line-through; font-weight: normal; margin-left: 0.4rem; font-size: 0.95rem; }
-    
-    .product-desc { margin: 0.25rem 0 0.75rem 0; color: #57606a; font-size: 0.9rem; }
+    .old-price { color: #8c959f; text-decoration: line-through; font-weight: normal; margin-left: 0.4rem; font-size: 0.95rem; }
+    .product-desc { margin: 0.25rem 0 0.75rem 0; color: #b0b8c0; font-size: 0.9rem; }
     button { background: #593210; color: white; border: none; padding: 0.6rem 1rem; border-radius: 6px; cursor: pointer; font-size: 0.95rem; margin-right: 0.5rem; margin-top: 0.5rem; }
     button:hover { background: #0550ae; }
     button.secondary { background: #6e7781; }
@@ -28,16 +30,16 @@
     button.danger:hover { background: #a40e26; }
     button.qty-btn { padding: 0.25rem 0.6rem; margin: 0 0.25rem; font-size: 0.85rem; }
     .cart-box { background: #0E2407; border: 1px solid #c3dcc7; border-radius: 8px; padding: 1.5rem; }
-    .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 0.6rem 0; border-bottom: 1px solid #e1e4e8; gap: 0.5rem; flex-wrap: wrap; }
+    .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 0.6rem 0; border-bottom: 1px solid #2b4522; gap: 0.5rem; flex-wrap: wrap; }
     .cart-controls { display: flex; align-items: center; }
     .totals-box { margin-top: 1rem; padding-top: 0.5rem; }
     .totals-row { display: flex; justify-content: space-between; margin: 0.3rem 0; }
     .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin: 1rem 0; }
-    .form-grid input, .form-grid select { width: 100%; padding: 0.55rem; border: 1px solid #A7ADB3; border-radius: 6px; box-sizing: border-box; font-size: 0.95rem; background: white; }
+    .form-grid input, .form-grid select { width: 100%; padding: 0.55rem; border: 1px solid #A7ADB3; border-radius: 6px; box-sizing: border-box; font-size: 0.95rem; background: white; color: #222; }
     .form-grid input.input-error, .form-grid select.input-error { border: 2px solid #cf222e; background: #fff8f8; }
-    .error-banner { color: #cf222e; font-weight: 600; margin: 0.5rem 0; }
+    .error-banner { color: #ff6b6b; font-weight: 600; margin: 0.5rem 0; }
     .order-badge { background: #ddf4ff; border: 1px solid #54aeff; color: #0969da; padding: 0.6rem 0.9rem; border-radius: 6px; font-weight: 600; margin-top: 1rem; display: inline-block; }
-    .send-note { font-size: 0.9rem; color: #57606a; margin-top: 0.5rem; }
+    .send-note { font-size: 0.9rem; color: #c3dcc7; margin-top: 0.5rem; }
     .full-width { grid-column: 1 / -1; }
     .city-state-zip { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 0.75rem; grid-column: 1 / -1; }
     textarea { width: 100%; height: 250px; margin-top: 0.75rem; padding: 0.75rem; font-family: monospace; box-sizing: border-box; border-radius: 6px; border: 1px solid #d0d7de; }
@@ -53,7 +55,12 @@
     <img src="SasquatchLargeBanner.jpg" alt="Sasquatch Muscle" class="banner-img">
   </div>
 
- <h1>Product Catalog</h1>
+  <nav class="nav-bar">
+    <a href="index.html" class="nav-link active">Store</a>
+    <a href="coa.html" class="nav-link">COA / Testing</a>
+  </nav>
+
+  <h1>Product Catalog</h1>
   <div class="promo-subheader">For a limited time, enjoy SST Intro Pricing</div>
   <div class="grid" id="product-list"></div>
 
@@ -95,7 +102,6 @@
         <option value="XMR">XMR</option>
         <option value="TRX">Tron</option>
         <option value="USDT-TRC20">USDT-TRC20</option>
-    
       </select>
     </div>
 
@@ -124,235 +130,192 @@
     // Edit your products here (make sure each item ends with a comma except the last one)
     const products = [
       { id: 1, image: "SasquatchIconThumbnail.png", name: "Sasquatch Testosterone E", price: 30.00, oldPrice: 40.00, desc: "300mg/ml" },
-      //{ id: 2, image: "BasicsIconThumbnail.png", name: "BasicsAAS Testosterone E", price: 40.00, oldPrice: 40.00,desc: "250mg/ml" },
-     //{ id: 3, image: "BasicsIconThumbnail.png", name: "BasicsAAS Testosterone E", price: 45.00, oldPrice: 40.00,desc: "300mg/ml" },
-      { id: 4, image: "SasquatchIconThumbnail.png", name: "Sasquatch Testosterone C", price: 35.00, oldPrice: 40.00,desc: "250mg/ml" },
-      //{ id: 5, image: "BasicsIconThumbnail.png", name: "BasicsAAS Testosterone C", price: 35.00, oldPrice: 40.00,desc: "200mg/ml" },
-      //{ id: 6, image: "BasicsIconThumbnail.png", name: "BasicsAAS Testosterone C", price: 40.00, oldPrice: 40.00,desc: "250mg/ml" },
-      { id: 7, image: "SasquatchIconThumbnail.png", name: "Sasquatch Testosterone P", price: 25.00, oldPrice: 40.00,desc: "100mg/ml" },
-      //{ id: 8, image: "BasicsIconThumbnail.png", name: "BasicsAAS Testosterone P", price: 30.00, oldPrice: 40.00,desc: "100mg/ml" },
-      { id: 9, image: "SasquatchIconThumbnail.png", name: "Sasquatch Testosterone A", price: 25.00, oldPrice: 40.00,desc: "125mg/ml" },
-      { id: 10, image: "SasquatchIconThumbnail.png", name: "Sasquatch Sustanon 250", price: 45.00, oldPrice: 40.00,desc: "250mg/ml" },
-     //{ id: 11, image: "BasicsIconThumbnail.png", name: "BasicsAAS Sustanon 250", price: 40.00, oldPrice: 40.00,desc: "250mg/ml" },
-      //{ id: 12, image: "BasicsIconThumbnail.png", name: "BasicsAAS Sustanon 250", price: 45.00, oldPrice: 40.00,desc: "300mg/ml" },
-      { id: 13, image: "SasquatchIconThumbnail.png", name: "Sasquatch Eq-Boldenone Undecylenate", price: 55.00, oldPrice: 40.00,desc: "300mg/ml" },
-      { id: 14, image: "SasquatchIconThumbnail.png", name: "Sasquatch Nandrolone Decanoate", price: 55.00, oldPrice: 40.00,desc: "200mg/ml" },
-      //{ id: 15, image: "BasicsIconThumbnail.png", name: "BasicsAAS Nandrolone Decanoate", price: 40.00, oldPrice: 40.00,desc: "200mg/ml" },
-     // { id: 16, image: "BasicsIconThumbnail.png", name: "BasicsAAS Nandrolone Phenylpropionate", price: 40.00, oldPrice: 40.00,desc: "150mg/ml" },
-      { id: 17, image: "SasquatchIconThumbnail.png", name: "Sasquatch Trenbolone E", price: 65.00, oldPrice: 40.00,desc: "250mg/ml" },
-      //{ id: 18, image: "BasicsIconThumbnail.png", name: "BasicsAAS Trenbolone E", price: 55.00, oldPrice: 40.00,desc: "200mg/ml" },
-      //{ id: 19, image: "BasicsIconThumbnail.png", name: "BasicsAAS Trenbolone A", price: 45.00, oldPrice: 40.00,desc: "100mg/ml" },
-      { id: 20, image: "SasquatchIconThumbnail.png", name: "Sasquatch Masteron E", price: 70.00, oldPrice: 40.00,desc: "200mg/ml" }
-
-    ];
-
-    let cart = [];
-    let currentOrderId = "";
-
-    function createOrderNumber() {
-      const now = new Date();
-      const year = now.getFullYear();
-      const month = String(now.getMonth() + 1).padStart(2, "0");
-      const day = String(now.getDate()).padStart(2, "0");
-      const randomPart = Math.floor(1000 + Math.random() * 9000);
-      return "ORD-" + year + month + day + "-" + randomPart;
-    }
-
-function renderProducts() {
-  const list = document.getElementById("product-list");
-  if (!list) return;
-
-  list.innerHTML = products.map(function(p) {
-    const imgHtml = p.image ? `<img src="${p.image}" alt="${p.name}" class="product-thumb">` : "";
-    const oldPriceHtml = p.oldPrice ? `<span class="old-price">$${Number(p.oldPrice).toFixed(2)}</span>` : "";
-
-    return `
-      <div class="card">
-        <div>
-          <div class="product-header">
-            ${imgHtml}
-            <h3>${p.name}</h3>
-          </div>
-          <p class="product-desc">${p.desc}</p>
-        </div>
-        <div>
-          <p><strong>$${Number(p.price).toFixed(2)}</strong>${oldPriceHtml}</p>
-          <button type="button" onclick="addToCart(${p.id})">Add to Cart</button>
-        </div>
-      </div>
-    `;
-  }).join("");
+      //{ id: 2, image: "BasicsIconThumbnail.png", name: "BasicsAAS Testosterone E", price: 40.00, oldPrice: 40.00, desc: "250mg/ml" },
+      //{ id: 3, image: "BasicsIconThumbnail.png", name: "BasicsAAS Testosterone E", price: 45.00, oldPrice: 40.00, desc: "300mg/ml" },
+      { id: 4, image: "SasquatchIconThumbnail.png", name: "Sasquatch Testosterone C", price: 35.00, oldPrice: 40.00, desc: "250mg/ml" },
+      //{ id: 5, image: "BasicsIconThumbnail.png", name: "BasicsAAS Testosterone C", price: 35.00, oldPrice: 40.00, desc: "200mg/ml" },
+      //{ id: 6, image: "BasicsIconThumbnail.png", name: "BasicsAAS Testosterone C", price: 40.00, oldPrice: 40.00, desc: "250mg/ml" },
+      { id: 7, image: "SasquatchIconThumbnail.png", name: "Sasquatch Testosterone P", price: 25.00, oldPrice: 40.00, desc: "100mg/ml" },
+      //{ id: 8, image: "BasicsIconThumbnail.png", name: "BasicsAAS Testosterone P", price: 30.00, oldPrice: 40.00, desc: "100mg/ml" },
+      { id: 9, image: "SasquatchIconThumbnail.png", name: "Sasquatch Testosterone A", price: 25.00, oldPrice: 40.00, desc: "125mg/ml" },
+      { id: 10, image: "SasquatchIconThumbnail.png", name: "Sasquatch Sustanon 250", price: 45.00, oldPrice: 40.00, desc: "250mg/ml" },
+      //{ id: 11, image: "BasicsIconThumbnail.png", name: "BasicsAAS Sustanon 250", price: 40.00, oldPrice: 40.00, desc: "250mg/ml" },
+      //{ id: 12, image: "BasicsIconThumbnail.png", name: "BasicsAAS Sustanon 250", price: 45.00, oldPrice: 40.00, desc: "300mg/ml" },
+      { id: 13, image: "SasquatchIconThumbnail.png", name: "Sasquatch Eq-Boldenone Undecylenate", price: 55.00, oldPrice: 40.00, desc: "300mg/ml" },
+      { id: 14, image: "SasquatchIconThumbnail.png", name: "Sasquatch Nandrolone Decanoate", price: 55.00, oldPrice: 40.00, desc: "200mg/ml" },
+      //{ id: 15, image: "BasicsIconThumbnail.png", name: "BasicsAAS Nandrolone Decanoate", price: 40.00, oldPrice: 40.00, desc: "200mg/ml" },
+      //{ id: 16, image: "BasicsIconThumbnail.png", name: "BasicsAAS Nandrolone Phenylpropionate", price: 40.00, oldPrice: 40.00, desc: "150mg/ml" },
+      { id: 17, image: "SasquatchIconThumbnail.png", name: "Sasquatch Trenbolone E", price: 65.00, oldPrice: 40.00, desc: "250mg/ml" },
+      //{ id: 18, image: "BasicsIconThumbnail.png", name: "BasicsAAS Trenbolone E", price: 55.00, oldPrice: 40.00, desc: "200mg/ml" },
+//{ id: 19, image: "BasicsIconThumbnail.png", name: "BasicsAAS Trenbolone A", price: 45.00, oldPrice: 40.00, desc: "100mg/ml" },
+{ id: 20, image: "SasquatchIconThumbnail.png", name: "Sasquatch Masteron E", price: 70.00, oldPrice: 40.00, desc: "200mg/ml" }
+];
+let cart = [];
+let currentOrderId = "";
+function createOrderNumber() {
+const now = new Date();
+const year = now.getFullYear();
+const month = String(now.getMonth() + 1).padStart(2, "0");
+const day = String(now.getDate()).padStart(2, "0");
+const randomPart = Math.floor(1000 + Math.random() * 9000);
+return "ORD-" + year + month + day + "-" + randomPart;
 }
-
-    function addToCart(id) {
-      const product = products.find(function(p) { return p.id === id; });
-      if (!product) return;
-
-      const existing = cart.find(function(item) { return item.id === id; });
-      if (existing) {
-        existing.qty += 1;
-      } else {
-        cart.push({ id: product.id, name: product.name, price: Number(product.price), qty: 1 });
-      }
-      updateCart();
-    }
-
-    function changeQty(id, delta) {
-      const item = cart.find(function(i) { return i.id === id; });
-      if (!item) return;
-      item.qty += delta;
-      if (item.qty <= 0) {
-        removeItem(id);
-      } else {
-        updateCart();
-      }
-    }
-
-    function removeItem(id) {
-      cart = cart.filter(function(item) { return item.id !== id; });
-      updateCart();
-    }
-
-    function updateCart() {
-      const container = document.getElementById("cart-items");
-      const subtotalEl = document.getElementById("cart-subtotal");
-      const shippingEl = document.getElementById("cart-shipping");
-      const totalEl = document.getElementById("cart-total");
-
-      if (cart.length === 0) {
-        container.innerHTML = "<p>Your cart is empty.</p>";
-        subtotalEl.textContent = "0.00";
-        shippingEl.textContent = "0.00";
-        totalEl.textContent = "0.00";
-        document.getElementById("output-section").classList.add("hidden");
-        return;
-      }
-
-      let subtotal = 0;
-      container.innerHTML = cart.map(function(item) {
-        const lineTotal = item.price * item.qty;
-        subtotal += lineTotal;
-        return `
-          <div class="cart-item">
-            <div>
-              <strong>${item.name}</strong> ($${item.price.toFixed(2)} each)
-            </div>
-            <div class="cart-controls">
-              <button type="button" class="secondary qty-btn" onclick="changeQty(${item.id}, -1)">-</button>
-              <span style="min-width: 24px; text-align: center;">${item.qty}</span>
-              <button type="button" class="secondary qty-btn" onclick="changeQty(${item.id}, 1)">+</button>
-              <span style="min-width: 75px; text-align: right; margin: 0 0.5rem;">$${lineTotal.toFixed(2)}</span>
-              <button type="button" class="danger qty-btn" onclick="removeItem(${item.id})">Remove</button>
-            </div>
-          </div>
-        `;
-      }).join("");
-
-      const total = subtotal + flatShippingRate;
-      subtotalEl.textContent = subtotal.toFixed(2);
-      shippingEl.textContent = flatShippingRate.toFixed(2);
-      totalEl.textContent = total.toFixed(2);
-    }
-
-    function validateForm() {
-      const fields = [
-        { id: "cust-name", label: "Full Name" },
-        { id: "cust-email", label: "Email Address" },
-        { id: "cust-address", label: "Street Address" },
-        { id: "cust-city", label: "City" },
-        { id: "cust-state", label: "State" },
-        { id: "cust-zip", label: "Zip Code" },
-        { id: "cust-payment", label: "Payment Method" }
-        ];
-        let missing = [];
-        const errorBanner = document.getElementById("form-error-msg");
-        fields.forEach(function(f) {
-        const el = document.getElementById(f.id);
-        const val = el.value.trim();
-        if (!val) {
-        el.classList.add("input-error");
-        missing.push(f.label);
-        } else if (f.id === "cust-email" && (!val.includes("@") || !val.includes("."))) {
-        el.classList.add("input-error");
-        missing.push("Valid Email Address");
-        } else {
-        el.classList.remove("input-error");
-        }
-        });
-        if (missing.length > 0) {
-        errorBanner.textContent = "Please complete all required fields: " + missing.join(", ") + ".";
-        errorBanner.classList.remove("hidden");
-        document.getElementById("output-section").classList.add("hidden");
-        return false;
-        }
-        errorBanner.classList.add("hidden");
-        return true;
-        }
-        function generateOrder() {
-        if (cart.length === 0) {
-        alert("Please add at least one item to your cart first.");
-        return;
-        }
-        if (!validateForm()) {
-        return;
-        }
-        currentOrderId = createOrderNumber();
-        document.getElementById("display-order-id").textContent = currentOrderId;
-        const name = document.getElementById("cust-name").value.trim();
-        const email = document.getElementById("cust-email").value.trim();
-        const address = document.getElementById("cust-address").value.trim();
-        const city = document.getElementById("cust-city").value.trim();
-        const state = document.getElementById("cust-state").value.trim();
-        const zip = document.getElementById("cust-zip").value.trim();
-        const payment = document.getElementById("cust-payment").value;
-        let subtotal = 0;
-        let lines = [
-        "NEW ORDER REQUEST",
-        "Order Number: " + currentOrderId,
-        "-------------------------",
-        "Name: " + name,
-        "Email: " + email,
-        "Address: " + address,
-        "City/State/Zip: " + city + ", " + state + " " + zip,
-        "Payment Method: " + payment,
-        "-------------------------",
-        "ITEMS:"
-        ];
-        cart.forEach(function(item) {
-        const lineTotal = item.price * item.qty;
-        subtotal += lineTotal;
-        lines.push(item.qty + "x " + item.name + " @ $" + item.price.toFixed(2) + " = $" + lineTotal.toFixed(2));
-        });
-        const total = subtotal + flatShippingRate;
-        lines.push("-------------------------");
-        lines.push("Subtotal: $" + subtotal.toFixed(2));
-        lines.push("Shipping (Flat Rate): $" + flatShippingRate.toFixed(2));
-        lines.push("ORDER TOTAL: $" + total.toFixed(2));
-        document.getElementById("order-text").value = lines.join("\n");
-        document.getElementById("output-section").classList.remove("hidden");
-        }
-        function sendViaEmail() {
-        const orderBody = document.getElementById("order-text").value;
-        const customerName = document.getElementById("cust-name").value.trim();
-        const subject = encodeURIComponent("Order " + currentOrderId + " from " + customerName);
-        const body = encodeURIComponent(orderBody);
-        window.location.href = "mailto:" + storeEmail + "?subject=" + subject + "&body=" + body;
-        }
-        function copyText() {
-        const box = document.getElementById("order-text");
-        box.select();
-        navigator.clipboard.writeText(box.value);
-        alert("Order " + currentOrderId + " copied! Paste it into an email to " + storeEmail);
-        }
-        function clearCart() {
-        cart = [];
-        currentOrderId = "";
-        updateCart();
-        document.getElementById("form-error-msg").classList.add("hidden");
-        }
-        document.addEventListener("DOMContentLoaded", renderProducts);
-          renderProducts();
+function renderProducts() {
+const list = document.getElementById("product-list");
+if (!list) return;
+list.innerHTML = products.map(function(p) {
+const imgHtml = p.image ? <img src="${p.image}" alt="${p.name}" class="product-thumb"> : "";
+const oldPriceHtml = p.oldPrice ? <span class="old-price">$${Number(p.oldPrice).toFixed(2)}</span> : "";
+return <div class="card"> <div> <div class="product-header"> ${imgHtml} <h3>${p.name}</h3> </div> <p class="product-desc">${p.desc}</p> </div> <div> <p><strong>$${Number(p.price).toFixed(2)}</strong>${oldPriceHtml}</p> <button type="button" onclick="addToCart(${p.id})">Add to Cart</button> </div> </div>;
+}).join("");
+}
+function addToCart(id) {
+const product = products.find(function(p) { return p.id === id; });
+if (!product) return;
+const existing = cart.find(function(item) { return item.id === id; });
+if (existing) {
+existing.qty += 1;
+} else {
+cart.push({ id: product.id, name: product.name, price: Number(product.price), qty: 1 });
+}
+updateCart();
+}
+function changeQty(id, delta) {
+const item = cart.find(function(i) { return i.id === id; });
+if (!item) return;
+item.qty += delta;
+if (item.qty <= 0) {
+removeItem(id);
+} else {
+updateCart();
+}
+}
+function removeItem(id) {
+cart = cart.filter(function(item) { return item.id !== id; });
+updateCart();
+}
+function updateCart() {
+const container = document.getElementById("cart-items");
+const subtotalEl = document.getElementById("cart-subtotal");
+const shippingEl = document.getElementById("cart-shipping");
+const totalEl = document.getElementById("cart-total");
+if (cart.length === 0) {
+container.innerHTML = "Your cart is empty.";
+subtotalEl.textContent = "0.00";
+shippingEl.textContent = "0.00";
+totalEl.textContent = "0.00";
+document.getElementById("output-section").classList.add("hidden");
+return;
+}
+let subtotal = 0;
+container.innerHTML = cart.map(function(item) {
+const lineTotal = item.price * item.qty;
+subtotal += lineTotal;
+return <div class="cart-item"> <div> <strong>${item.name}</strong> ($${item.price.toFixed(2)} each) </div> <div class="cart-controls"> <button type="button" class="secondary qty-btn" onclick="changeQty(${item.id}, -1)">-</button> <span style="min-width: 24px; text-align: center;">${item.qty}</span> <button type="button" class="secondary qty-btn" onclick="changeQty(${item.id}, 1)">+</button> <span style="min-width: 75px; text-align: right; margin: 0 0.5rem;">$${lineTotal.toFixed(2)}</span> <button type="button" class="danger qty-btn" onclick="removeItem(${item.id})">Remove</button> </div> </div>;
+}).join("");
+const total = subtotal + flatShippingRate;
+subtotalEl.textContent = subtotal.toFixed(2);
+shippingEl.textContent = flatShippingRate.toFixed(2);
+totalEl.textContent = total.toFixed(2);
+}
+function validateForm() {
+const fields = [
+{ id: "cust-name", label: "Full Name" },
+{ id: "cust-email", label: "Email Address" },
+{ id: "cust-address", label: "Street Address" },
+{ id: "cust-city", label: "City" },
+{ id: "cust-state", label: "State" },
+{ id: "cust-zip", label: "Zip Code" },
+{ id: "cust-payment", label: "Payment Method" }
+];
+let missing = [];
+const errorBanner = document.getElementById("form-error-msg");
+fields.forEach(function(f) {
+const el = document.getElementById(f.id);
+const val = el.value.trim();
+if (!val) {
+el.classList.add("input-error");
+missing.push(f.label);
+} else if (f.id === "cust-email" && (!val.includes("@") || !val.includes("."))) {
+el.classList.add("input-error");
+missing.push("Valid Email Address");
+} else {
+el.classList.remove("input-error");
+}
+});
+if (missing.length > 0) {
+errorBanner.textContent = "Please complete all required fields: " + missing.join(", ") + ".";
+errorBanner.classList.remove("hidden");
+document.getElementById("output-section").classList.add("hidden");
+return false;
+}
+errorBanner.classList.add("hidden");
+return true;
+}
+function generateOrder() {
+if (cart.length === 0) {
+alert("Please add at least one item to your cart first.");
+return;
+}
+if (!validateForm()) {
+return;
+}
+currentOrderId = createOrderNumber();
+document.getElementById("display-order-id").textContent = currentOrderId;
+const name = document.getElementById("cust-name").value.trim();
+const email = document.getElementById("cust-email").value.trim();
+const address = document.getElementById("cust-address").value.trim();
+const city = document.getElementById("cust-city").value.trim();
+const state = document.getElementById("cust-state").value.trim();
+const zip = document.getElementById("cust-zip").value.trim();
+const payment = document.getElementById("cust-payment").value;
+let subtotal = 0;
+let lines = [
+"NEW ORDER REQUEST",
+"Order Number: " + currentOrderId,
+"-------------------------",
+"Name: " + name,
+"Email: " + email,
+"Address: " + address,
+"City/State/Zip: " + city + ", " + state + " " + zip,
+"Payment Method: " + payment,
+"-------------------------",
+"ITEMS:"
+];
+cart.forEach(function(item) {
+const lineTotal = item.price * item.qty;
+subtotal += lineTotal;
+lines.push(item.qty + "x " + item.name + " @ $" + item.price.toFixed(2) + " = $" + lineTotal.toFixed(2));
+});
+const total = subtotal + flatShippingRate;
+lines.push("-------------------------");
+lines.push("Subtotal: $" + subtotal.toFixed(2));
+lines.push("Shipping (Flat Rate): $" + flatShippingRate.toFixed(2));
+lines.push("ORDER TOTAL: $" + total.toFixed(2));
+document.getElementById("order-text").value = lines.join("\n");
+document.getElementById("output-section").classList.remove("hidden");
+}
+function sendViaEmail() {
+const orderBody = document.getElementById("order-text").value;
+const customerName = document.getElementById("cust-name").value.trim();
+const subject = encodeURIComponent("Order " + currentOrderId + " from " + customerName);
+const body = encodeURIComponent(orderBody);
+window.location.href = "mailto:" + storeEmail + "?subject=" + subject + "&body=" + body;
+}
+function copyText() {
+const box = document.getElementById("order-text");
+box.select();
+navigator.clipboard.writeText(box.value);
+alert("Order " + currentOrderId + " copied! Paste it into an email to " + storeEmail);
+}
+function clearCart() {
+cart = [];
+currentOrderId = "";
+updateCart();
+document.getElementById("form-error-msg").classList.add("hidden");
+}
+document.addEventListener("DOMContentLoaded", renderProducts);
+renderProducts();
   </script>
 </body>
 </html>
-
