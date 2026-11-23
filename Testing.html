@@ -13,12 +13,19 @@
     .nav-link:hover { background: #593210; color: #ffffff; }
     .nav-link.active { background: #163020; color: #ffea00; border-color: #ffea00; }
     .content-box { background: #262B27; border: 1px solid #c3dcc7; border-radius: 8px; padding: 1.5rem; }
-    .coa-list { list-style: none; padding: 0; margin: 1rem 0 0 0; }
+    .search-bar { display: flex; gap: 0.5rem; margin: 1rem 0 1.25rem 0; flex-wrap: wrap; }
+    .search-bar input { flex: 1; min-width: 200px; padding: 0.55rem 0.75rem; border: 1px solid #A7ADB3; border-radius: 6px; font-size: 0.95rem; background: #ffffff; color: #222222; }
+    .search-btn { background: #593210; color: #ffffff; border: none; padding: 0.55rem 1rem; border-radius: 6px; cursor: pointer; font-size: 0.95rem; font-weight: 600; }
+    .search-btn:hover { background: #0550ae; }
+    .clear-btn { background: #6e7781; color: #ffffff; border: none; padding: 0.55rem 0.9rem; border-radius: 6px; cursor: pointer; font-size: 0.95rem; font-weight: 600; }
+    .clear-btn:hover { background: #57606a; }
+    .coa-list { list-style: none; padding: 0; margin: 0.5rem 0 0 0; }
     .coa-item { display: flex; justify-content: space-between; align-items: center; padding: 0.85rem 0; border-bottom: 1px solid #3c443e; gap: 1rem; flex-wrap: wrap; }
     .coa-item:last-child { border-bottom: none; }
     .coa-meta { color: #b0b8c0; font-size: 0.9rem; }
     .coa-btn { background: #593210; color: #ffffff; text-decoration: none; padding: 0.5rem 1rem; border-radius: 6px; font-size: 0.9rem; font-weight: 600; }
     .coa-btn:hover { background: #0550ae; }
+    .no-results { color: #b0b8c0; padding: 1rem 0; font-style: italic; }
   </style>
 </head>
 <body>
@@ -35,6 +42,13 @@
   <div class="content-box">
     <h1>Lab Testing &amp; Certificates of Analysis (COA)</h1>
     <p>Select any product below to view its third-party lab testing report (listed A&ndash;Z):</p>
+
+    <div class="search-bar">
+      <input type="text" id="coa-search" placeholder="Search by product name or batch..." onkeyup="handleSearchKey(event)">
+      <button type="button" class="search-btn" onclick="renderReports()">Search</button>
+      <button type="button" class="clear-btn" onclick="clearSearch()">Clear</button>
+    </div>
+
     <ul class="coa-list" id="coa-list"></ul>
   </div>
 
@@ -52,13 +66,38 @@
       { name: "Sasquatch Masteron E (200mg/ml)", meta: "Batch #001 • Third-Party Lab Report", url: "https://example.com" }
     ];
 
+    function handleSearchKey(event) {
+      if (event.key === "Enter") {
+        renderReports();
+      }
+    }
+
+    function clearSearch() {
+      const input = document.getElementById("coa-search");
+      if (input) input.value = "";
+      renderReports();
+    }
+
     function renderReports() {
       const list = document.getElementById("coa-list");
+      const input = document.getElementById("coa-search");
       if (!list) return;
 
-      const sorted = reports.slice().sort(function(a, b) {
+      const query = input ? input.value.trim().toLowerCase() : "";
+
+      const filtered = reports.filter(function(item) {
+        if (!query) return true;
+        return item.name.toLowerCase().includes(query) || item.meta.toLowerCase().includes(query);
+      });
+
+      const sorted = filtered.slice().sort(function(a, b) {
         return a.name.localeCompare(b.name);
       });
+
+      if (sorted.length === 0) {
+        list.innerHTML = '<li class="no-results">No matching lab reports found.</li>';
+        return;
+      }
 
       let html = "";
       for (let i = 0; i < sorted.length; i++) {
