@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -34,26 +34,45 @@
 
   <div class="content-box">
     <h1>Lab Testing &amp; Certificates of Analysis (COA)</h1>
-    <p>Select any product below to view its third-party lab testing report:</p>
-
-    <ul class="coa-list">
-      <li class="coa-item">
-        <div>
-          <strong>Sasquatch Testosterone E (300mg/ml)</strong><br>
-          <span class="coa-meta">Batch #001 &bull; Third-Party Lab Report</span>
-        </div>
-        <a href="https://example.com/test-e-coa" target="_blank" rel="noopener" class="coa-btn">View COA</a>
-      </li>
-
-      <li class="coa-item">
-        <div>
-          <strong>Sasquatch Testosterone C (250mg/ml)</strong><br>
-          <span class="coa-meta">Batch #001 &bull; Third-Party Lab Report</span>
-        </div>
-        <a href="https://example.com/test-c-coa" target="_blank" rel="noopener" class="coa-btn">View COA</a>
-      </li>
-    </ul>
+    <p>Select any product below to view its third-party lab testing report (listed A&ndash;Z):</p>
+    <ul class="coa-list" id="coa-list"></ul>
   </div>
 
+  <script>
+    // Add or edit your lab reports here in any order—they will automatically display A–Z
+    const reports = [
+      { name: "Sasquatch Testosterone E (300mg/ml)", meta: "Batch #001 • Third-Party Lab Report", url: "https://example.com" },
+      { name: "Sasquatch Testosterone C (250mg/ml)", meta: "Batch #001 • Third-Party Lab Report", url: "https://example.com" },
+      { name: "Sasquatch Testosterone P (100mg/ml)", meta: "Batch #001 • Third-Party Lab Report", url: "https://example.com" },
+      { name: "Sasquatch Testosterone A (125mg/ml)", meta: "Batch #001 • Third-Party Lab Report", url: "https://example.com" },
+      { name: "Sasquatch Sustanon 250 (250mg/ml)", meta: "Batch #001 • Third-Party Lab Report", url: "https://example.com" },
+      { name: "Sasquatch Eq-Boldenone Undecylenate (300mg/ml)", meta: "Batch #001 • Third-Party Lab Report", url: "https://example.com" },
+      { name: "Sasquatch Nandrolone Decanoate (200mg/ml)", meta: "Batch #001 • Third-Party Lab Report", url: "https://example.com" },
+      { name: "Sasquatch Trenbolone E (250mg/ml)", meta: "Batch #001 • Third-Party Lab Report", url: "https://example.com" },
+      { name: "Sasquatch Masteron E (200mg/ml)", meta: "Batch #001 • Third-Party Lab Report", url: "https://example.com" }
+    ];
+
+    function renderReports() {
+      const list = document.getElementById("coa-list");
+      if (!list) return;
+
+      const sorted = reports.slice().sort(function(a, b) {
+        return a.name.localeCompare(b.name);
+      });
+
+      let html = "";
+      for (let i = 0; i < sorted.length; i++) {
+        const item = sorted[i];
+        html += '<li class="coa-item">' +
+          '<div><strong>' + item.name + '</strong><br>' +
+          '<span class="coa-meta">' + item.meta + '</span></div>' +
+          '<a href="' + item.url + '" target="_blank" rel="noopener" class="coa-btn">View COA</a>' +
+          '</li>';
+      }
+      list.innerHTML = html;
+    }
+
+    renderReports();
+  </script>
 </body>
 </html>
