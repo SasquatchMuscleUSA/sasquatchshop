@@ -120,202 +120,226 @@
     </div>
   </div>
 
-  <script>
-    // Receiving email address
+    <script>
     const storeEmail = "SasquatchMuscleUSA@proton.me";
-
-    // Flat-rate shipping fee
     const flatShippingRate = 20.00;
 
-    // Edit your products here (make sure each item ends with a comma except the last one)
     const products = [
       { id: 1, image: "SasquatchIconThumbnail.png", name: "Sasquatch Testosterone E", price: 30.00, oldPrice: 40.00, desc: "300mg/ml" },
-      //{ id: 2, image: "BasicsIconThumbnail.png", name: "BasicsAAS Testosterone E", price: 40.00, oldPrice: 40.00, desc: "250mg/ml" },
-      //{ id: 3, image: "BasicsIconThumbnail.png", name: "BasicsAAS Testosterone E", price: 45.00, oldPrice: 40.00, desc: "300mg/ml" },
       { id: 4, image: "SasquatchIconThumbnail.png", name: "Sasquatch Testosterone C", price: 35.00, oldPrice: 40.00, desc: "250mg/ml" },
-      //{ id: 5, image: "BasicsIconThumbnail.png", name: "BasicsAAS Testosterone C", price: 35.00, oldPrice: 40.00, desc: "200mg/ml" },
-      //{ id: 6, image: "BasicsIconThumbnail.png", name: "BasicsAAS Testosterone C", price: 40.00, oldPrice: 40.00, desc: "250mg/ml" },
       { id: 7, image: "SasquatchIconThumbnail.png", name: "Sasquatch Testosterone P", price: 25.00, oldPrice: 40.00, desc: "100mg/ml" },
-      //{ id: 8, image: "BasicsIconThumbnail.png", name: "BasicsAAS Testosterone P", price: 30.00, oldPrice: 40.00, desc: "100mg/ml" },
       { id: 9, image: "SasquatchIconThumbnail.png", name: "Sasquatch Testosterone A", price: 25.00, oldPrice: 40.00, desc: "125mg/ml" },
       { id: 10, image: "SasquatchIconThumbnail.png", name: "Sasquatch Sustanon 250", price: 45.00, oldPrice: 40.00, desc: "250mg/ml" },
-      //{ id: 11, image: "BasicsIconThumbnail.png", name: "BasicsAAS Sustanon 250", price: 40.00, oldPrice: 40.00, desc: "250mg/ml" },
-      //{ id: 12, image: "BasicsIconThumbnail.png", name: "BasicsAAS Sustanon 250", price: 45.00, oldPrice: 40.00, desc: "300mg/ml" },
       { id: 13, image: "SasquatchIconThumbnail.png", name: "Sasquatch Eq-Boldenone Undecylenate", price: 55.00, oldPrice: 40.00, desc: "300mg/ml" },
       { id: 14, image: "SasquatchIconThumbnail.png", name: "Sasquatch Nandrolone Decanoate", price: 55.00, oldPrice: 40.00, desc: "200mg/ml" },
-      //{ id: 15, image: "BasicsIconThumbnail.png", name: "BasicsAAS Nandrolone Decanoate", price: 40.00, oldPrice: 40.00, desc: "200mg/ml" },
-      //{ id: 16, image: "BasicsIconThumbnail.png", name: "BasicsAAS Nandrolone Phenylpropionate", price: 40.00, oldPrice: 40.00, desc: "150mg/ml" },
       { id: 17, image: "SasquatchIconThumbnail.png", name: "Sasquatch Trenbolone E", price: 65.00, oldPrice: 40.00, desc: "250mg/ml" },
-      //{ id: 18, image: "BasicsIconThumbnail.png", name: "BasicsAAS Trenbolone E", price: 55.00, oldPrice: 40.00, desc: "200mg/ml" },
-//{ id: 19, image: "BasicsIconThumbnail.png", name: "BasicsAAS Trenbolone A", price: 45.00, oldPrice: 40.00, desc: "100mg/ml" },
-{ id: 20, image: "SasquatchIconThumbnail.png", name: "Sasquatch Masteron E", price: 70.00, oldPrice: 40.00, desc: "200mg/ml" }
-];
-let cart = [];
-let currentOrderId = "";
-function createOrderNumber() {
-const now = new Date();
-const year = now.getFullYear();
-const month = String(now.getMonth() + 1).padStart(2, "0");
-const day = String(now.getDate()).padStart(2, "0");
-const randomPart = Math.floor(1000 + Math.random() * 9000);
-return "ORD-" + year + month + day + "-" + randomPart;
-}
-function renderProducts() {
-const list = document.getElementById("product-list");
-if (!list) return;
-list.innerHTML = products.map(function(p) {
-const imgHtml = p.image ? <img src="${p.image}" alt="${p.name}" class="product-thumb"> : "";
-const oldPriceHtml = p.oldPrice ? <span class="old-price">$${Number(p.oldPrice).toFixed(2)}</span> : "";
-return <div class="card"> <div> <div class="product-header"> ${imgHtml} <h3>${p.name}</h3> </div> <p class="product-desc">${p.desc}</p> </div> <div> <p><strong>$${Number(p.price).toFixed(2)}</strong>${oldPriceHtml}</p> <button type="button" onclick="addToCart(${p.id})">Add to Cart</button> </div> </div>;
-}).join("");
-}
-function addToCart(id) {
-const product = products.find(function(p) { return p.id === id; });
-if (!product) return;
-const existing = cart.find(function(item) { return item.id === id; });
-if (existing) {
-existing.qty += 1;
-} else {
-cart.push({ id: product.id, name: product.name, price: Number(product.price), qty: 1 });
-}
-updateCart();
-}
-function changeQty(id, delta) {
-const item = cart.find(function(i) { return i.id === id; });
-if (!item) return;
-item.qty += delta;
-if (item.qty <= 0) {
-removeItem(id);
-} else {
-updateCart();
-}
-}
-function removeItem(id) {
-cart = cart.filter(function(item) { return item.id !== id; });
-updateCart();
-}
-function updateCart() {
-const container = document.getElementById("cart-items");
-const subtotalEl = document.getElementById("cart-subtotal");
-const shippingEl = document.getElementById("cart-shipping");
-const totalEl = document.getElementById("cart-total");
-if (cart.length === 0) {
-container.innerHTML = "Your cart is empty.";
-subtotalEl.textContent = "0.00";
-shippingEl.textContent = "0.00";
-totalEl.textContent = "0.00";
-document.getElementById("output-section").classList.add("hidden");
-return;
-}
-let subtotal = 0;
-container.innerHTML = cart.map(function(item) {
-const lineTotal = item.price * item.qty;
-subtotal += lineTotal;
-return <div class="cart-item"> <div> <strong>${item.name}</strong> ($${item.price.toFixed(2)} each) </div> <div class="cart-controls"> <button type="button" class="secondary qty-btn" onclick="changeQty(${item.id}, -1)">-</button> <span style="min-width: 24px; text-align: center;">${item.qty}</span> <button type="button" class="secondary qty-btn" onclick="changeQty(${item.id}, 1)">+</button> <span style="min-width: 75px; text-align: right; margin: 0 0.5rem;">$${lineTotal.toFixed(2)}</span> <button type="button" class="danger qty-btn" onclick="removeItem(${item.id})">Remove</button> </div> </div>;
-}).join("");
-const total = subtotal + flatShippingRate;
-subtotalEl.textContent = subtotal.toFixed(2);
-shippingEl.textContent = flatShippingRate.toFixed(2);
-totalEl.textContent = total.toFixed(2);
-}
-function validateForm() {
-const fields = [
-{ id: "cust-name", label: "Full Name" },
-{ id: "cust-email", label: "Email Address" },
-{ id: "cust-address", label: "Street Address" },
-{ id: "cust-city", label: "City" },
-{ id: "cust-state", label: "State" },
-{ id: "cust-zip", label: "Zip Code" },
-{ id: "cust-payment", label: "Payment Method" }
-];
-let missing = [];
-const errorBanner = document.getElementById("form-error-msg");
-fields.forEach(function(f) {
-const el = document.getElementById(f.id);
-const val = el.value.trim();
-if (!val) {
-el.classList.add("input-error");
-missing.push(f.label);
-} else if (f.id === "cust-email" && (!val.includes("@") || !val.includes("."))) {
-el.classList.add("input-error");
-missing.push("Valid Email Address");
-} else {
-el.classList.remove("input-error");
-}
-});
-if (missing.length > 0) {
-errorBanner.textContent = "Please complete all required fields: " + missing.join(", ") + ".";
-errorBanner.classList.remove("hidden");
-document.getElementById("output-section").classList.add("hidden");
-return false;
-}
-errorBanner.classList.add("hidden");
-return true;
-}
-function generateOrder() {
-if (cart.length === 0) {
-alert("Please add at least one item to your cart first.");
-return;
-}
-if (!validateForm()) {
-return;
-}
-currentOrderId = createOrderNumber();
-document.getElementById("display-order-id").textContent = currentOrderId;
-const name = document.getElementById("cust-name").value.trim();
-const email = document.getElementById("cust-email").value.trim();
-const address = document.getElementById("cust-address").value.trim();
-const city = document.getElementById("cust-city").value.trim();
-const state = document.getElementById("cust-state").value.trim();
-const zip = document.getElementById("cust-zip").value.trim();
-const payment = document.getElementById("cust-payment").value;
-let subtotal = 0;
-let lines = [
-"NEW ORDER REQUEST",
-"Order Number: " + currentOrderId,
-"-------------------------",
-"Name: " + name,
-"Email: " + email,
-"Address: " + address,
-"City/State/Zip: " + city + ", " + state + " " + zip,
-"Payment Method: " + payment,
-"-------------------------",
-"ITEMS:"
-];
-cart.forEach(function(item) {
-const lineTotal = item.price * item.qty;
-subtotal += lineTotal;
-lines.push(item.qty + "x " + item.name + " @ $" + item.price.toFixed(2) + " = $" + lineTotal.toFixed(2));
-});
-const total = subtotal + flatShippingRate;
-lines.push("-------------------------");
-lines.push("Subtotal: $" + subtotal.toFixed(2));
-lines.push("Shipping (Flat Rate): $" + flatShippingRate.toFixed(2));
-lines.push("ORDER TOTAL: $" + total.toFixed(2));
-document.getElementById("order-text").value = lines.join("\n");
-document.getElementById("output-section").classList.remove("hidden");
-}
-function sendViaEmail() {
-const orderBody = document.getElementById("order-text").value;
-const customerName = document.getElementById("cust-name").value.trim();
-const subject = encodeURIComponent("Order " + currentOrderId + " from " + customerName);
-const body = encodeURIComponent(orderBody);
-window.location.href = "mailto:" + storeEmail + "?subject=" + subject + "&body=" + body;
-}
-function copyText() {
-const box = document.getElementById("order-text");
-box.select();
-navigator.clipboard.writeText(box.value);
-alert("Order " + currentOrderId + " copied! Paste it into an email to " + storeEmail);
-}
-function clearCart() {
-cart = [];
-currentOrderId = "";
-updateCart();
-document.getElementById("form-error-msg").classList.add("hidden");
-}
-document.addEventListener("DOMContentLoaded", renderProducts);
-renderProducts();
+      { id: 20, image: "SasquatchIconThumbnail.png", name: "Sasquatch Masteron E", price: 70.00, oldPrice: 40.00, desc: "200mg/ml" }
+    ];
+
+    let cart = [];
+    let currentOrderId = "";
+
+    function createOrderNumber() {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, "0");
+      const day = String(now.getDate()).padStart(2, "0");
+      const randomPart = Math.floor(1000 + Math.random() * 9000);
+      return "ORD-" + year + month + day + "-" + randomPart;
+    }
+
+    function renderProducts() {
+      const list = document.getElementById("product-list");
+      if (!list) return;
+      let html = "";
+      for (let i = 0; i < products.length; i++) {
+        const p = products[i];
+        const imgHtml = p.image ? '<img src="' + p.image + '" alt="' + p.name + '" class="product-thumb">' : "";
+        const oldPriceHtml = p.oldPrice ? '<span class="old-price">$' + Number(p.oldPrice).toFixed(2) + '</span>' : "";
+        html += '<div class="card">' +
+          '<div><div class="product-header">' + imgHtml + '<h3>' + p.name + '</h3></div>' +
+          '<p class="product-desc">' + p.desc + '</p></div>' +
+          '<div><p><strong>$' + Number(p.price).toFixed(2) + '</strong>' + oldPriceHtml + '</p>' +
+          '<button type="button" onclick="addToCart(' + p.id + ')">Add to Cart</button></div>' +
+          '</div>';
+      }
+      list.innerHTML = html;
+    }
+
+    function addToCart(id) {
+      const product = products.find(function(p) { return p.id === id; });
+      if (!product) return;
+      const existing = cart.find(function(item) { return item.id === id; });
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({ id: product.id, name: product.name, price: Number(product.price), qty: 1 });
+      }
+      updateCart();
+    }
+
+    function changeQty(id, delta) {
+      const item = cart.find(function(i) { return i.id === id; });
+      if (!item) return;
+      item.qty += delta;
+      if (item.qty <= 0) {
+        removeItem(id);
+      } else {
+        updateCart();
+      }
+    }
+
+    function removeItem(id) {
+      cart = cart.filter(function(item) { return item.id !== id; });
+      updateCart();
+    }
+
+    function updateCart() {
+      const container = document.getElementById("cart-items");
+      const subtotalEl = document.getElementById("cart-subtotal");
+      const shippingEl = document.getElementById("cart-shipping");
+      const totalEl = document.getElementById("cart-total");
+
+      if (cart.length === 0) {
+        container.innerHTML = "<p>Your cart is empty.</p>";
+        subtotalEl.textContent = "0.00";
+        shippingEl.textContent = "0.00";
+        totalEl.textContent = "0.00";
+        document.getElementById("output-section").classList.add("hidden");
+        return;
+      }
+
+      let subtotal = 0;
+      container.innerHTML = cart.map(function(item) {
+        const lineTotal = item.price * item.qty;
+        subtotal += lineTotal;
+        return '<div class="cart-item">' +
+          '<div><strong>' + item.name + '</strong> ($' + item.price.toFixed(2) + ' each)</div>' +
+          '<div class="cart-controls">' +
+          '<button type="button" class="secondary qty-btn" onclick="changeQty(' + item.id + ', -1)">-</button>' +
+          '<span style="min-width: 24px; text-align: center;">' + item.qty + '</span>' +
+          '<button type="button" class="secondary qty-btn" onclick="changeQty(' + item.id + ', 1)">+</button>' +
+          '<span style="min-width: 75px; text-align: right; margin: 0 0.5rem;">$' + lineTotal.toFixed(2) + '</span>' +
+          '<button type="button" class="danger qty-btn" onclick="removeItem(' + item.id + ')">Remove</button>' +
+          '</div></div>';
+      }).join("");
+
+      const total = subtotal + flatShippingRate;
+      subtotalEl.textContent = subtotal.toFixed(2);
+      shippingEl.textContent = flatShippingRate.toFixed(2);
+      totalEl.textContent = total.toFixed(2);
+    }
+
+    function validateForm() {
+      const fields = [
+        { id: "cust-name", label: "Full Name" },
+        { id: "cust-email", label: "Email Address" },
+        { id: "cust-address", label: "Street Address" },
+        { id: "cust-city", label: "City" },
+        { id: "cust-state", label: "State" },
+        { id: "cust-zip", label: "Zip Code" },
+        { id: "cust-payment", label: "Payment Method" }
+      ];
+
+      let missing = [];
+      const errorBanner = document.getElementById("form-error-msg");
+
+      fields.forEach(function(f) {
+        const el = document.getElementById(f.id);
+        const val = el.value.trim();
+        if (!val) {
+          el.classList.add("input-error");
+          missing.push(f.label);
+        } else if (f.id === "cust-email" && (!val.includes("@") || !val.includes("."))) {
+          el.classList.add("input-error");
+          missing.push("Valid Email Address");
+        } else {
+          el.classList.remove("input-error");
+        }
+      });
+
+      if (missing.length > 0) {
+        errorBanner.textContent = "Please complete all required fields: " + missing.join(", ") + ".";
+        errorBanner.classList.remove("hidden");
+        document.getElementById("output-section").classList.add("hidden");
+        return false;
+      }
+
+      errorBanner.classList.add("hidden");
+      return true;
+    }
+
+    function generateOrder() {
+      if (cart.length === 0) {
+        alert("Please add at least one item to your cart first.");
+        return;
+      }
+      if (!validateForm()) return;
+
+      currentOrderId = createOrderNumber();
+      document.getElementById("display-order-id").textContent = currentOrderId;
+
+      const name = document.getElementById("cust-name").value.trim();
+      const email = document.getElementById("cust-email").value.trim();
+      const address = document.getElementById("cust-address").value.trim();
+      const city = document.getElementById("cust-city").value.trim();
+      const state = document.getElementById("cust-state").value.trim();
+      const zip = document.getElementById("cust-zip").value.trim();
+      const payment = document.getElementById("cust-payment").value;
+
+      let subtotal = 0;
+      let lines = [
+        "NEW ORDER REQUEST",
+        "Order Number: " + currentOrderId,
+        "-------------------------",
+        "Name: " + name,
+        "Email: " + email,
+        "Address: " + address,
+        "City/State/Zip: " + city + ", " + state + " " + zip,
+        "Payment Method: " + payment,
+        "-------------------------",
+        "ITEMS:"
+      ];
+
+      cart.forEach(function(item) {
+        const lineTotal = item.price * item.qty;
+        subtotal += lineTotal;
+        lines.push(item.qty + "x " + item.name + " @ $" + item.price.toFixed(2) + " = $" + lineTotal.toFixed(2));
+      });
+
+      const total = subtotal + flatShippingRate;
+      lines.push("-------------------------");
+      lines.push("Subtotal: $" + subtotal.toFixed(2));
+      lines.push("Shipping (Flat Rate): $" + flatShippingRate.toFixed(2));
+      lines.push("ORDER TOTAL: $" + total.toFixed(2));
+
+      document.getElementById("order-text").value = lines.join("\n");
+      document.getElementById("output-section").classList.remove("hidden");
+    }
+
+    function sendViaEmail() {
+      const orderBody = document.getElementById("order-text").value;
+      const customerName = document.getElementById("cust-name").value.trim();
+      const subject = encodeURIComponent("Order " + currentOrderId + " from " + customerName);
+      const body = encodeURIComponent(orderBody);
+      window.location.href = "mailto:" + storeEmail + "?subject=" + subject + "&body=" + body;
+    }
+
+    function copyText() {
+      const box = document.getElementById("order-text");
+      box.select();
+      navigator.clipboard.writeText(box.value);
+      alert("Order " + currentOrderId + " copied! Paste it into an email to " + storeEmail);
+    }
+
+    function clearCart() {
+      cart = [];
+      currentOrderId = "";
+      updateCart();
+      document.getElementById("form-error-msg").classList.add("hidden");
+    }
+
+    renderProducts();
   </script>
 </body>
 </html>
