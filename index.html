@@ -154,28 +154,30 @@
     }
 
     function renderProducts() {
-  const productContainer = document.getElementById('product-list'); // Match your container's ID
-  productContainer.innerHTML = '';
-
-  products.forEach(product => {
-    // 1. Check if the item is in stock
-    const isAvailable = product.inStock !== false; 
-
-    // 2. Replace your existing button HTML with this conditional version:
-    productContainer.innerHTML += `
-      <div class="product-card">
-        <!-- Keep your existing image, title, description, and price lines here -->
+      const list = document.getElementById("product-list");
+      if (!list) return;
+      let html = "";
+      for (let i = 0; i < products.length; i++) {
+        const p = products[i];
+        const imgHtml = p.image ? '<img src="' + p.image + '" alt="' + p.name + '" class="product-thumb">' : "";
+        const oldPriceHtml = p.oldPrice ? '<span class="old-price">$' + Number(p.oldPrice).toFixed(2) + '</span>' : "";
         
-        <button 
-          onclick="addToCart(${product.id})" 
-          ${!isAvailable ? 'disabled' : ''}
-        >
-          ${isAvailable ? 'Add to Cart' : 'Out of Stock'}
-        </button>
-      </div>
-    `;
-  });
-}
+        // Check if product is in stock (defaults to true if inStock is omitted)
+        const isAvailable = p.inStock !== false;
+        const disabledAttr = isAvailable ? '' : ' disabled';
+        const btnText = isAvailable ? 'Add to Cart' : 'Out of Stock';
+
+        html += '<div class="card">' +
+          '<div><div class="product-header">' + imgHtml + '<h3>' + p.name + '</h3></div>' +
+          '<p class="product-desc">' + p.desc + '</p></div>' +
+          '<div><p><strong>$' + Number(p.price).toFixed(2) + '</strong>' + oldPriceHtml + '</p>' +
+          '<button type="button" onclick="addToCart(' + p.id + ')"' + disabledAttr + '>' + btnText + '</button></div>' +
+          '</div>';
+      }
+      list.innerHTML = html;
+    }
+
+
 
       
     function addToCart(id) {
