@@ -31,6 +31,18 @@
     button.danger { background: #cf222e; }
     button.danger:hover { background: #a40e26; }
     button.qty-btn { padding: 0.25rem 0.6rem; margin: 0 0.25rem; font-size: 0.85rem; }
+    @keyframes pulseFlash {
+          0%, 100% {
+            opacity: 1;
+          }
+          50% {
+            opacity: 0.15; /* Change to 0 if you want it to disappear completely */
+          }
+        }
+        
+        .flash-text {
+          animation: pulseFlash 2s infinite ease-in-out;
+        }
     .cart-box { background: #0E2407; border: 1px solid #c3dcc7; border-radius: 8px; padding: 1.5rem; }
     .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 0.6rem 0; border-bottom: 1px solid #2b4522; gap: 0.5rem; flex-wrap: wrap; }
     .cart-controls { display: flex; align-items: center; }
@@ -64,8 +76,9 @@
 
   <h1>Product Catalog</h1>
     <div style="margin-bottom: 24px;">
-      <h1 style="color: #FFD700; font-size: 1.2rem; margin: 0;">*For a limited time, enjoy SST Intro Pricing</h1>
-      <h1 style="color: #FFD700; font-size: 1.1rem; margin: 4px 0 0 0;">**Orals Coming Soon!</h1>
+      <h1 class="flash-text" style="color: #FFD700; font-size: 1.2rem; margin: 0;">*For a limited time, enjoy SST Intro Pricing</h1>
+      <h1 class="flash-text" style="display: block; width: 100%; color: #FFD700; font-size: 1.1rem; margin: 4px 0 24px 0;">Orals Coming Soon!</h1>
+
     </div>
 
   <div class="grid" id="product-list"></div>
